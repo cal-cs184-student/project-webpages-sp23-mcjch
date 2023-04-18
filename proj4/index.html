@@ -1,7 +1,242 @@
-<html>
-	<head>
-	</head>
-	<body>
-		Project 4 here
-	</body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<style>
+  body {
+    padding: 100px;
+    width: 1000px;
+    margin: auto;
+    text-align: left;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+    color: #121212;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+</style>
+<title>CS 184 Mesh Editor</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
+</head>
+
+
+<body>
+
+<h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2023</h1>
+<h1 align="middle">Project 4: Cloth Simulator</h1>
+<h2 align="middle"> CJ Hines </h2>
+
+<br><br>
+
+<div>
+
+<h2 align="middle">Overview</h2>
+<p>In this project, I implemented a cloth simulator using masses and springs.</p>
+
+<h2 align="middle">Part 1: Masses and springs</h2>
+
+    <h3><b>
+       Take some screenshots of scene/pinned2.json from a viewing angle where you can clearly see the cloth wireframe to show the structure of your point masses and springs.
+    </b></h3>
+      <p>
+        <div align="middle">
+          <table style="width:100%">
+            <tr align="center">
+              <td>
+                <img src="images/1.0a.png" align="middle" width="400px"/>
+                <figcaption>`scene/pinned2.json` from the front. </figcaption>
+              </td>
+              <td>
+                <img src="images/1.0b.png" align="middle" width="400px"/>
+                <figcaption>`scene/pinned2.json` from above zoomed in.</figcaption>
+              </td>
+            </tr>
+          </table>
+        </div>
+    </p>
+    <br>
+    <h3><b>
+        Show us what the wireframe looks like (1) without any shearing constraints, (2) with only shearing constraints, and (3) with all constraints.
+    </b></h3>
+    <p>
+        <div align="middle">
+          <table style="width:100%">
+            <tr align="center">
+              <td>
+                <img src="images/1.1.png" align="middle" width="400px"/>
+                <figcaption>'scene/pinned2.json` without any shearing constraints.</figcaption>
+              </td>
+              <td>
+                <img src="images/1.2.png" align="middle" width="400px"/>
+                <figcaption>'scene/pinned2.json` with only shearing constraints.</figcaption>
+              </td>
+            </tr>
+            <br>
+            <tr align="center">
+               <td>
+                <img src="images/1.3.png" align="middle" width="400px"/>
+                <figcaption>'scene/pinned2.json` with all constraints.</figcaption>
+              </td>
+            </tr>
+            <br>
+            <br>
+          </table>
+        </div>
+    </p>
+    <br>
+
+<h2 align="middle">Part 2: Simulation via numerical integration</h2>
+
+    <h3><b>
+      Experiment with some the parameters in the simulation. To do so, pause the simulation at the start with P, modify the values of interest, and then resume by pressing P again. You can also restart the simulation at any time from the cloth's starting position by pressing R.
+      <br>
+      Describe the effects of changing the spring constant ks; how does the cloth behave from start to rest with a very low ks? A high ks?
+      </b></h3>
+        <p>
+        From start to rest, the cloth ripples and then settles.
+        Low ks = Looser overall and saggier at the top.
+        High ks = Tighter overall and less sag at the top.
+        </p>
+      <br>
+      <h3><b>
+      What about for density?
+      </b></h3>
+        <p>
+        From start to rest, the cloth is saggier at the top with high density and barely sags with low density. The cloth falls at the same speed.
+        Low density = Less ripples at the top.
+        High density = More ripples at the top.
+        </p>
+      <br>
+      <h3><b>
+      What about for damping?
+      </b></h3>
+        <p>
+        From start to rest, the cloth falls slower and settles easier when damping is high and falls quickly and swings back and forth for a while before settling.
+        Low damping = Lighter.
+        High damping = Heavier. 
+        </p>
+      <br>
+      <h3><b>
+      For each of the above, observe any noticeable differences in the cloth compared to the default parameters and show us some screenshots of those interesting differences and describe when they occur.
+    </b></h3>
+    <br>
+    <p>
+        <div align="middle">
+          <table style="width:100%">
+            <tr align="center">
+              <td>
+                <img src="images/2ks1.png" align="middle" width="400px"/>
+                <figcaption>`scene/pinned2.json` with ks=10.</figcaption>
+              </td>
+              <td>
+                <img src="images/2ks2.png" align="middle" width="400px"/>
+                <figcaption>`scene/pinned2.json` with ks=50000.</figcaption>
+              </td>
+            </tr>
+            <br>
+            <tr align="center">
+               <td>
+                <img src="images/2d1.png" align="middle" width="400px"/>
+                <figcaption>`scene/pinned2.json` with density=1.</figcaption>
+              </td>
+              <td>
+                <img src="images/2d2.png" align="middle" width="400px"/>
+                <figcaption>`scene/pinned2.json` with density=1000.</figcaption>
+              </td>
+            </tr>
+            <br>
+            <tr align="center">
+               <td>
+                <img src="images/2damplight.png" align="middle" width="400px"/>
+                <figcaption>`scene/pinned2.json` with damping low mid-fall.</figcaption>
+              </td>
+              <td>
+                <img src="images/2damp.png" align="middle" width="400px"/>
+                <figcaption>`scene/pinned2.json` with damping high mid-fall.</figcaption>
+              </td>
+            </tr>
+            <br>
+          </table>
+        </div>
+    </p>
+    <br>
+    <h3><b>
+      Show us a screenshot of your shaded cloth from scene/pinned4.json in its final resting state! If you choose to use different parameters than the default ones, please list them.
+    </b></h3>
+    <p>
+        <div align="middle">
+          <table style="width:100%">
+            <tr align="center">
+              <td>
+                <img src="images/24.png" align="middle" width="400px"/>
+                <figcaption>`pinned4.json` in its final state.</figcaption>
+              </td>
+            </tr>
+            </tr>
+            <br>
+          </table>
+        </div>
+    </p>
+
+<h2 align="middle">Part 3: Handling collisions with other objects</h2>
+
+ <h3><b>
+Show us screenshots of your shaded cloth from scene/sphere.json in its final resting state on the sphere using the default ks = 5000 as well as with ks = 500 and ks = 50000. Describe the differences in the results.
+</b></h3>
+<p>
+  With ks=5000, the cloth falls on the sphere regularly as expected. With ks=500, the cloth falls more limply to cover more of the sphere because the springs are looser. With ks=50000, the cloth falls more stiffly on the sphere and is slowly sliding off of the sphere because the springs are stiffer.
+</p>
+<p>
+        <div align="middle">
+          <table style="width:100%">
+            <tr align="center">
+              <td>
+                <img src="images/3.1.png" align="middle" width="400px"/>
+                <figcaption>'scene/sphere.json` with ks=5000.</figcaption>
+              </td>
+              <td>
+                <img src="images/3.2.png" align="middle" width="400px"/>
+                <figcaption>'scene/sphere.json` with ks=500.</figcaption>
+              </td>
+            </tr>
+            <br>
+            <tr align="center">
+               <td>
+                <img src="images/3.3.png" align="middle" width="400px"/>
+                <figcaption>'scene/sphere.json` with ks=50000.</figcaption>
+              </td>
+            </tr>
+            <br>
+            <br>
+          </table>
+        </div>
+    </p>
+    <br>
+ <h3><b>
+Show us a screenshot of your shaded cloth lying peacefully at rest on the plane. If you haven't by now, feel free to express your colorful creativity with the cloth! (You will need to complete the shaders portion first to show custom colors.)
+</b></h3>
+<p>
+        <div align="middle">
+          <table style="width:100%">
+            <tr align="center">
+              <td>
+                <img src="images/3.4.png" align="middle" width="400px"/>
+                <figcaption>'scene/plane.json` in its final wireframe state.</figcaption>
+              </td>
+              <td>
+                <img src="images/3.5.png" align="middle" width="400px"/>
+                <figcaption>'scene/pinned2.json` final state with  color.</figcaption>
+              </td>
+            </tr>
+          </table>
+        </div>
+    </p>
+    <br>
+
+
+<h2 align="middle">Part 4: Handling self-collisions</h2>
+
+
+</body>
 </html>
