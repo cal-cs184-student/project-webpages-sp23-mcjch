@@ -1,27 +1,293 @@
-<html>
-	<head>
-	</head>
-	<body>
-		<h3>CS184/284A Project Webpages</h3>
-		<br><br>
-		<a href="/proj1/index.html">Project 1</a>
-		<br><br>
-		<a href="/proj2/index.html">Project 2</a>
-		<br><br>
-		<a href="/proj3-1/index.html">Project 3-1</a>
-		<br><br>
-		<a href="/proj3-2/index.html">Project 3-2</a>
-		<br><br>
-		<a href="/proj4/index.html">Project 4</a>
-	</body>
-	<script>
-		var links = document.body.getElementsByTagName("a")
-		var a = window.location.href.indexOf(".io")
-		var repo_name = window.location.href.substring(a+3)
-		for(var i = 0; i < links.length; i++){
-			var link = links[i]
-			var actual_name = link.href.substring(link.href.indexOf(".io")+4)
-			link.href = repo_name + actual_name
-		}
-	</script>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<style>
+  body {
+    background-color: white;
+    padding: 100px;
+    width: 1000px;
+    margin: auto;
+    text-align: left;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+    color: #121212;
+  }
+  h1, h2, h3, h4 {
+    font-weight: bold;
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+  kbd {
+    color: #121212;
+  }
+</style>
+<title> CJ Hines | CS 184 </title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
+</head>
+<body>
+<br />
+<h1 align="middle">Assignment 3-2: Additional Features to PathTracer</h1>
+    <h2 align="middle">CJ Hines</h2>
+    <h2 align="middle"><a href="https://cal-cs184-student.github.io/project-webpages-sp23-mcjch/proj3-2/index.html">https://cal-cs184-student.github.io/project-webpages-sp23-mcjch/proj3-2/index.html</a></h2>
+    <br>
+
+    <h3 align="middle">Part 1. Mirror and Glass Materials</h3>
+
+    <h3><b>
+        Show a sequence of six images of scene `CBspheres.dae` rendered with `max_ray_depth` set to 0, 1, 2, 3, 4, 5, and 100. The other settings should be at least 64 samples per pixel and 4 samples per light. Make sure to include all screenshots.
+    </b></h3>
+    <p>
+        <div align="middle">
+          <table style="width:100%">
+            <tr align="center">
+              <td>
+                <img src="images/1.0.png" align="middle" width="400px"/>
+                <figcaption>`CBspheres.dae` rendered with `max_ray_depth` set to 0.</figcaption>
+              </td>
+              <td>
+                <img src="images/1.0_rate.png" align="middle" width="400px"/>
+                <figcaption>`CBspheres.dae` rendered rate with `max_ray_depth` set to 0.</figcaption>
+              </td>
+            </tr>
+            <br>
+            <tr align="center">
+               <td>
+                <img src="images/1.1.png" align="middle" width="400px"/>
+                <figcaption>`CBspheres.dae` rendered with `max_ray_depth` set to 1.</figcaption>
+              </td>
+              <td>
+                <img src="images/1.1_rate.png" align="middle" width="400px"/>
+                <figcaption>`CBspheres.dae` rendered rate with `max_ray_depth` set to 1.</figcaption>
+              </td>
+            </tr>
+            <br>
+            <tr align="center">
+              <td>
+                <img src="images/1.2.png" align="middle" width="400px"/>
+                <figcaption>`CBspheres.dae` rendered with `max_ray_depth` set to 2.</figcaption>
+              </td>
+              <td>
+                <img src="images/1.2_rate.png" align="middle" width="400px"/>
+                <figcaption>`CBspheres.dae` rendered rate with `max_ray_depth` set to 2.</figcaption>
+              </td>
+            </tr>
+            <br>
+            <tr align="center">
+              <td>
+                <img src="images/1.3.png" align="middle" width="400px"/>
+                <figcaption>`CBspheres.dae` rendered with `max_ray_depth` set to 3.</figcaption>
+              </td>
+              <td>
+                <img src="images/1.3_rate.png" align="middle" width="400px"/>
+                <figcaption>`CBspheres.dae` rendered rate with `max_ray_depth` set to 3.</figcaption>
+              </td>
+            </tr>
+            <br>
+            <tr align="center">
+               <td>
+                <img src="images/1.4.png" align="middle" width="400px"/>
+                <figcaption>`CBspheres.dae` rendered with `max_ray_depth` set to 4.</figcaption>
+              </td>
+              <td>
+                <img src="images/1.4_rate.png" align="middle" width="400px"/>
+                <figcaption>`CBspheres.dae` rendered rate with `max_ray_depth` set to 4.</figcaption>
+              </td>
+            </tr>
+            <br>
+            <tr align="center">
+              <td>
+                <img src="images/1.5.png" align="middle" width="400px"/>
+                <figcaption>`CBspheres.dae` rendered with `max_ray_depth` set to 5.</figcaption>
+              </td>
+              <td>
+                <img src="images/1.5_rate.png" align="middle" width="400px"/>
+                <figcaption>`CBspheres.dae` rendered rate with `max_ray_depth` set to 5.</figcaption>
+              </td>
+            </tr>
+            <br>
+            <tr align="center">
+              <td>
+                <img src="images/1.100.png" align="middle" width="400px"/>
+                <figcaption>`CBspheres.dae` rendered with `max_ray_depth` set to 100.</figcaption>
+              </td>
+              <td>
+                <img src="images/1.100_rate.png" align="middle" width="400px"/>
+                <figcaption>`CBspheres.dae` rendered rate with `max_ray_depth` set to 100.</figcaption>
+              </td>
+            </tr>
+          </table>
+        </div>
+    </p>
+    <br>
+    <h3><b>
+        Point out the new multibounce effects that appear in each image. Explain how these bounce numbers relate to the particular effects that appear. Make sure to include all screenshots.
+    </b></h3>
+    <p>
+        With max ray depth set to 0, nothing but the light source is visible after zero bounces. Only the light is visible because the light does not bounce.        
+        <br>
+        With max ray depth set to 1, the floor, the walls, the light source, and the light source reflection off the spheres are now visible after one bounce. he right sphere is also refractive, so the light patch is has more spots than the left sphere which is only reflective. The light bounces off the floor, walls, and spheres into the camera.
+        <br>
+        With max ray depth set to 2, everything at max ray depth 1 is visible along with the cieling and also the walls, floor, and light source reflected clearly in the left sphere and less so in the right sphere due to refraction. The light now bounces off the cieling into the camera after two bounces. The light bounces off the walls, floor, and spheres onto the other spheres and into the camera. 
+        <br>
+        With max ray depth set to 3, everything at max ray depth 2 is visible along with the reflection of the cieling and the walls in both spheres as well as the the circle of light under the glass sphere on the floor  off of the right sphere. The light bounces three times: (1) off the floors/walls onto (2) the cieling/spheres onto (3) the spheres into the camera and/or onto the circle of light off the right sphere into the camera.
+        <br>
+        With max ray depth set to 4, everything at max ray depth 3 is visible along with the reflection of the right sphere in the left sphere and the reflection of light on the blue wall.  The light bounces four times: (1) off the floor/walls onto (2) the cieling/spheres refracting/reflecting onto (3) the spheres onto (4) the blue wall and left sphere off the right sphere and into the camera.
+        <br>
+        With max ray depth set to 5, everything at max ray depth 4 is visible and overall global illumination is higher. The light bounces five times: (1) off the floor/walls onto (2) the cieling/spheres refracting/reflecting onto (3) the spheres onto (4) the blue wall and left sphere off the right sphere onto (5) the walls/floor, spheres, reflecting and refracting onto circle of light into the camera.
+        <br>
+        With max ray depth set to 100, everything at max ray depth 5 is visible and overall global illumination is higher, but there are no new significant multibounce effects between 5 and 100. 
+        <br>
+    </p>
+    <br>
+
+
+    <h3 align="middle">Part 2. Microfacet Material</h3>
+    <h3><b>
+        Show a screenshot sequence of 4 images of scene `CBdragon_microfacet_au.dae` rendered with $\alpha$ set to 0.005, 0.05, 0.25 and 0.5. The other settings should be at least 128 samples per pixel and 1 samples per light. The number of bounces should be at least 5. Describe the differences between different images. Note that, to change the $\alpha$, just open the .dae file and search for `microfacet`.
+    </b></h3>
+    <p>
+        With alpha set to 0.005, the dragon is shiniest and smooth, reflecting light more specularly. The rendered image is also noisiest and spottiest.
+        <br>
+        With alpha set to 0.05, the dragon is less shiny, smooth, and reflective. The dragon reflects light slightly more diffusely than 0.005, and the rendered image is less noisy than 0.005.
+        <br>
+        With alpha set to 0.25, the dragon is duller and rougher than 0.05, reflecting light more diffusely than specularly. The rendered image is also not noisy.
+        <br>
+        With alpha set to 0.5, the dragon is dullest and most rough, reflecting light more diffusely. The rendered image is clear.
+        <br>
+
+        <div align="middle">
+          <table style="width:100%">
+            <tr align="center">
+              <td>
+                <img src="images/2.0a.png" align="middle" width="400px"/>
+                <figcaption>  `CBdragon_microfacet_au.dae` rendered with alpha set to 0.005. </figcaption>
+              </td>
+              <td>
+                <img src="images/2.1a.png" align="middle" width="400px"/>
+                <figcaption>  `CBdragon_microfacet_au.dae` rendered with alpha set to 0.05. </figcaption>
+              </td>
+            </tr>
+            <tr align="center">
+              <td>
+                <img src="images/2.2a.png" align="middle" width="400px"/>
+                <figcaption>  `CBdragon_microfacet_au.dae` rendered with alpha set to 0.25. </figcaption>
+              </td>
+              <td>
+                <img src="images/2.3a.png" align="middle" width="400px"/>
+                <figcaption>  `CBdragon_microfacet_au.dae` rendered with alpha set to 0.5. </figcaption>
+              </td>
+            </tr>
+        </table>
+    </div>
+    </p>
+    <br>
+    <h3><b>
+        Show two images of scene `CBbunny_microfacet_cu.dae` rendered using cosine hemisphere sampling (default) and your importance sampling. The sampling rate should be fixed at 64 samples per pixel and 1 samples per light. The number of bounces should be at least 5. Briefly discuss their difference.
+    </b></h3>
+    <p>
+        The image rendered using the default, cosine hemisphere sampling is noisier and spottier. The image rendered using my importance sampling is overall less noisy, and the bunny is more clear. 
+        <div align="middle">
+          <table style="width:100%">
+            <tr align="center">
+              <td>
+                <img src="images/2.0b.png" align="middle" width="400px"/>
+                <figcaption>  `CBbunny_microfacet_cu.dae` rendered using cosine hemisphere sampling (default). </figcaption>
+              </td>
+              <td>
+                <img src="images/2.1b.png" align="middle" width="400px"/>
+                <figcaption>  `CBbunny_microfacet_cu.dae` rendered using importance sampling. </figcaption>
+              </td>
+            </tr>
+        </table>
+    </div>
+    </p>
+    <br>
+    <h3><b>
+        Show at least one image with some other conductor material, replacing `eta` and `k`. Note that you should look up values for real data rather than modifying them arbitrarily. Tell us what kind of material your parameters correspond to. 
+    </b></h3>
+    <p>
+        The conductor material here is iron. 'eta' = '2.8851 2.95 2.65' and 'k' = '3.1646 2.5785 2.4603'.
+        <div align="middle">
+          <table style="width:100%">
+            <tr align="center">
+              <td>
+                <img src="images/2.0c.png" align="middle" width="400px"/>
+                <figcaption> `CBdragon_microfacet_au.dae` with 'eta' = '2.8851 2.95 2.65' and 'k' = '3.1646 2.5785 2.4603'. </figcaption>
+              </td>
+              <td>
+                <img src="images/2.1c.png" align="middle" width="400px"/>
+                <figcaption> `CBbunny_microfacet_cu.dae` with 'eta' = '2.8851 2.95 2.65' and 'k' = '3.1646 2.5785 2.4603'. </figcaption>
+              </td>
+            </tr>
+        </table>
+    </div>
+    </p>
+    <br>
+    
+    
+    
+
+    <h3 align="middle">Part 3. Environment Lightl</h3>
+    <b>Pick one *.exr* file to use for all subparts here. Include a converted *.jpg* of it in your website so we know what map you are using.</b>
+    
+    <p><b>
+        In a few sentences, explain the ideas behind environment lighting (i.e. why we do it/how it works).
+    </b></p>
+    <p>
+        Your response goes here.
+    </p>
+    <br>
+    <p><b>
+        Show the *probability_debug.png* file for the *.exr* file you are using, generated using the `save_probability_debug()` helper function after initializing your probability distributions.
+    </b></p>
+    <p>
+        Your response goes here.
+    </p>
+    <br>
+    <p><b>
+        Use the `bunny_unlit.dae` scene and your environment map *.exr* file and render two pictures, one with uniform sampling and one with importance sampling. Use 4 samples per pixel and 64 samples per light in each. Compare noise levels. Make sure to include all screenshots.
+    </b></p>
+    <p>
+        Your response goes here.
+    </p>
+    <br>
+    <p><b>
+        Use a different image (if you did part 2, we recommend `bunny_microfacet_cu_unlit.dae`) and your environment map *.exr* file and render two pictures, one with uniform sampling and one with importance sampling. Use 4 samples per pixel and 64 samples per light in each. Compare noise levels. Make sure to include all screenshots.
+    </b></p>
+    <p>
+        Your response goes here.
+    </p>
+    <br>
+
+
+
+    <h3 align="middle">Part 4. Depth of Field</h3>
+    <b>
+        For these subparts, we recommend using a microfacet BSDF scene to show off the cool out of focus effects you can get with depth of field!
+    </b>
+    <p><b>
+        In a few sentences, explain the differences between a pinhole camera model and a thin-lens camera model. 
+    </b></p>
+    <p>
+        Your response goes here.
+    </p>
+    <br>
+    <p><b>
+        Show a "focus stack" where you focus at 4 visibly different depths through a scene. Make sure to include all screenshots.
+    </b></p>
+    <p>
+        Your response goes here.
+    </p>
+    <br>
+    <p><b>
+        Show a sequence of 4 pictures with visibly different aperture sizes, all focused at the same point in a scene. Make sure to include all screenshots.
+    </b></p>
+    <p>
+        Your response goes here.
+    </p>
+    <br>
+
+</div>
+</body>
 </html>
+
