@@ -1,5 +1,7 @@
 # CS184 Project Webpage Repo
 
+Page: https://cal-cs184-student.github.io/project-webpages-sp23-mcjch/
+
 The goal of this repo is to provide a template from which students can host CS184 project writeups. 
 
 ## Enabling Github Pages
