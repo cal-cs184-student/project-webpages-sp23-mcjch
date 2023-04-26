@@ -1,7 +1,244 @@
-<html>
-	<head>
-	</head>
-	<body>
-		Project 3-1 here
-	</body>
-</html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<style>
+  body {
+    background-color: white;
+    padding: 100px;
+    width: 1000px;
+    margin: auto;
+    text-align: left;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+    color: #121212;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+  kbd {
+    color: #121212;
+  }
+</style>
+<title>CS 184 Path Tracer</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
+
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    }
+  };
+</script>
+<script id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+
+</head>
+
+
+<body>
+
+<h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2023</h1>
+<h1 align="middle">Project 3-1: Path Tracer</h1>
+<h2 align="middle">CJ HINES</h2>
+
+<!-- Add Website URL -->
+<h2 align="middle">Website URL: <a href="https://cal-cs184-student.github.io/project-webpages-sp23-mcjch/proj3-1">me 184 site</a></h2>
+
+<br><br>
+
+
+<div align="center">
+  <table style="width=100%">
+      <tr>
+          <td align="middle">
+          <img src="images/example_image.png" width="480px" />
+          <figcaption align="middle">Results Caption: my bunny is the bounciest bunny</figcaption>
+      </tr>
+  </table>
+</div>
+
+<p>All of the text in your write-up should be <em>in your own words</em>. If you need to add additional HTML features to this document, you can search the <a href="http://www.w3schools.com/">http://www.w3schools.com/</a> website for instructions. To edit the HTML, you can just copy and paste existing chunks and fill in the text and image file names appropriately.</p>
+<o>The website writeup is intended to be a self-contained walkthrough of the assignment: we want this to be a piece of work which showcases your understanding of relevant concepts through both mesh images as well as written explanations about what you did to complete each part of the assignment. Try to be as clear and organized as possible when writing about your own output files or extensions to the assignment. We want to understand what you've achieved and how you've done it!</p> 
+<p>If you are well-versed in web development, feel free to ditch this template and make a better looking page.</p>
+
+
+<p>Here are a few problems students have encountered in the past. Test your website on the instructional machines early!</p>
+<ul>
+<li>Your main report page should be called index.html.</li>
+<li>Be sure to include and turn in all of the other files (such as images) that are linked in your report!</li>
+<li>Use only <em>relative</em> paths to files, such as <pre>"./images/image.jpg"</pre>
+Do <em>NOT</em> use absolute paths, such as <pre>"/Users/student/Desktop/image.jpg"</pre></li>
+<li>Pay close attention to your filename extensions. Remember that on UNIX systems (such as the instructional machines), capitalization matters. <pre>.png != .jpeg != .jpg != .JPG</pre></li>
+<li>Be sure to adjust the permissions on your files so that they are world readable. For more information on this please see this tutorial: <a href="http://www.grymoire.com/Unix/Permissions.html">http://www.grymoire.com/Unix/Permissions.html</a></li>
+<li>And again, test your website on the instructional machines early!</li>
+</ul>
+
+
+<p>Here is an example of how to include a simple formula:</p>
+<p align="middle"><pre align="middle">a^2 + b^2 = c^2</pre></p>
+<p>or, alternatively, you can include an SVG image of a LaTex formula.</p>
+
+<div>
+
+<h2 align="middle">Overview</h2>
+<p>
+    In this project I implemented ray generation and triangle and sphere intersection as well as BVH construction. I was stuck on part 2 for a long time and was no longer able to render images past that point. I did my best to implement what I could of the project in the code using the math and logic from lecture and Ed, but could not visually show what I completed in the images.
+</p>
+<br>
+
+<h2 align="middle">Part 1: Ray Generation and Scene Intersection (20 Points)</h2>
+<!-- Walk through the ray generation and primitive intersection parts of the rendering pipeline.
+Explain the triangle intersection algorithm you implemented in your own words.
+Show images with normal shading for a few small .dae files. -->
+
+<h3>
+  Walk through the ray generation and primitive intersection parts of the rendering pipeline.
+</h3>
+<p>
+    First, I had to take the image coordinates, transform the coordinates to camera space, and generate the ray in world space using origin position and normalized direction vector. Second, I had to generate pixel samples by going through all the samples we have to evaluate, generating a ray, estimating the scene radiance, and adding this estimate to the vector that I update the pixel with. I initially struggled with little details in the first task such as the order of normalizing the vector. Debugging was hard because there were two tasks to look at and fix.
+</p>
+<br>
+
+<h3>
+  Explain the triangle intersection algorithm you implemented in your own words.
+</h3>
+<p>
+    I had to implement two boolean functions for ray-triangle intersecton. The second function also updates values in isect variable. I utilized the Moller Trumbore Algorithm to calculate triangle intersection. I initially struggled with manipulating the vector values in the equation. I also implemented ray-sphere intersection using the algorithm from lecture.
+</p>
+<br>
+
+<h3>
+  Show images with normal shading for a few small .dae files.
+</h3>
+<!-- Example of including multiple figures -->
+<div align="middle">
+  <table style="width:100%">
+    <tr align="center">
+      <td>
+        <img src="images/CBempty.png" align="middle" width="400px"/>
+        <figcaption> CBempty.dae </figcaption>
+      </td>
+      <td>
+        <img src="images/banana.png" align="middle" width="400px"/>
+        <figcaption> banana.dae </figcaption>
+      </td>
+    </tr>
+    <tr align="center">
+      <td>
+        <img src="images/cube.png" align="middle" width="400px"/>
+        <figcaption> cube.dae </figcaption>
+      </td>
+      <td>
+        <img src="images/CBgems.png" align="middle" width="400px"/>
+        <figcaption> CBgems.dae </figcaption>
+      </td>
+    </tr>
+    <tr align="center">
+      <td>
+        <img src="images/CBspheres.png" align="middle" width="400px"/>
+        <figcaption> CBspheres.dae </figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<br>
+
+
+<h2 align="middle">Part 2: Bounding Volume Hierarchy (20 Points)</h2>
+<!-- Walk through your BVH construction algorithm. Explain the heuristic you chose for picking the splitting point.
+Show images with normal shading for a few large .dae files that you can only render with BVH acceleration.
+Compare rendering times on a few scenes with moderately complex geometries with and without BVH acceleration. Present your results in a one-paragraph analysis. -->
+
+<h3>
+  Walk through your BVH construction algorithm. Explain the heuristic you chose for picking the splitting point.
+</h3>
+<p>
+    I couldn't figure this one out because I struggled with which function was the main problem with getting intersections. The image would render, but nothing would intersect. I spent a lot of time rewriting this code and my implementation unfortunately couldn't work out, but the work is there. In part 2.1, I built on the root node and checked if the amount of primitives were greater than the maximum leaf size. If yes, I calculated the medians using the extents and split the primitives and then compared the centroids of the bounding boxes of the primitives. I then recursively called construct_bvh on the left and right schild nodes. In part 2.2, I implemented the algorithm from lecture to perform a ray-bounding box intersection test and updated t0 and t1. In parts 2.3, I tried to follow the algorithm from lecture. I reccursively call both functions on children and if the nodes don't have children I check for intersection on each primitive in the node. I short circuit the function in has_intersection and continue for the closest hit in intersect.
+</p>
+
+<h3>
+  Show images with normal shading for a few large .dae files that you can only render with BVH acceleration.
+</h3>
+<!-- Example of including multiple figures -->
+<br>
+
+<h3>
+  Compare rendering times on a few scenes with moderately complex geometries with and without BVH acceleration. Present your results in a one-paragraph analysis.
+</h3>
+<p>
+    Cow before and after. 
+    <div align="middle">
+  <table style="width:100%">
+    <tr align="center">
+      <td>
+        <img src="images/cowv.png" align="middle" width="400px"/>
+      </td>
+      <td>
+        <img src="images/cow.png" align="middle" width="400px"/>
+      </td>
+    </tr>
+  </table>
+</div>
+<br>
+</p>
+<br>
+
+<h2 align="middle">Part 3: Direct Illumination (20 Points)</h2>
+<!-- Walk through both implementations of the direct lighting function.
+Show some images rendered with both implementations of the direct lighting function.
+Focus on one particular scene with at least one area light and compare the noise levels in soft shadows when rendering with 1, 4, 16, and 64 light rays (the -l flag) and with 1 sample per pixel (the -s flag) using light sampling, not uniform hemisphere sampling.
+Compare the results between uniform hemisphere sampling and lighting sampling in a one-paragraph analysis. -->
+
+<h3>
+  Walk through both implementations of the direct lighting function.
+</h3>
+<p>
+My Uniform Hemisphere Sampling function implementation estimates the direct lighting by sampling uniformly in a hemisphere. I looped over the number of samples, generating a random direction vector on the hemisphere and transformed it to world coordinates using the coordinate system at the hit point. I then created a new ray and checked for intersection with the scene's BVH. If it intersected, I calculated the L_out by multiplying the BRDF and the generated direction with the emission of the intersected surface and the cosine of the angle between the direction and the surface normal averaged the accumulated lighting over num_samples.
+
+I messed something up in one of the CGL files and could not load the importance sampling lighting images. My Light Sampling function implementation estimates direct lighting at an intersection point coming directly from a light. I looped over all the light sources in the scene, and for each light source, it samples the light at the intersection point. The number of samples is determined by whether or not the light source is a delta light or has an area. For each sample, I sampled the light source of the SceneLight and set its variables to the wi vector, distToLight, and pdf. I then created a new ray starting from the intersection point pointing towards the sampled direction. If the ray interseced with an object in the scene, I calculated L_out by multiplying the reflection coefficient at the intersection point with the emission of the intersected object and the cosine of the angle between the sampled direction and the surface normal and divided by the number of samples.
+
+</p>
+
+<h3>
+  Show some images rendered with both implementations of the direct lighting function.
+</h3>
+<!-- Example of including multiple figures -->
+<div align="middle">
+  <table style="width:100%">
+    <!-- Header -->
+    <tr align="center">
+      <th>
+        <b>Uniform Hemisphere Sampling</b>
+      </th>
+      <th>
+        <b>Light Sampling</b>
+      </th>
+    </tr>
+    <br>
+    <tr align="center">
+      <td>
+        <img src="images/lowresuhs.png" align="middle" width="400px"/>
+        <figcaption> Low resolution - Uniform Hemisphere Sampling </figcaption>
+      </td>
+      <td>
+        <img src="images/highresuhs.png" align="middle" width="400px"/>
+        <figcaption> High resolution - Uniform Hemisphere Sampling </figcaption>
+      </td>
+    </tr>
+    <br>
+    <tr align="center">
+      <td>
+        <img src="images/lowresls.png" align="middle" width="400px"/>
+        <figcaption> Low resolution - Importance Sampling Lights </figcaption>
+      </td>
+      <td>
+        <img src="images/highresls.png" align="middle" width="400px"/>
+        <figcaption> High resolution - Importance Sampling Lights </figcaption>
+      </td>
+    </tr>
+    <br>
+  </table>
+</div>
+<br>
